@@ -21,6 +21,12 @@ export class Profile {
   birthday: string;
 
   @Prop()
+  horoscope: string;
+
+  @Prop()
+  zodiac: string;
+
+  @Prop()
   height: number;
 
   @Prop()

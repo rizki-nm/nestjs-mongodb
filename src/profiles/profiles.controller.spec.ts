@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProfilesController } from './profiles.controller';
+import { ProfilesService } from './profiles.service';
 
 describe('ProfilesController', () => {
   let controller: ProfilesController;
+  let service: ProfilesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

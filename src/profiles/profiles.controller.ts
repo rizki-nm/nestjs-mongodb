@@ -18,10 +18,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateProfileDto } from './dto/create-profile.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
-import { ResponseFormat } from './format/response.format';
-import { DataFormat } from './format/data.format';
+import { CreateProfileDto } from './dto/request/create-profile.dto';
+import { UpdateProfileDto } from './dto/request/update-profile.dto';
+import { ResponseDto } from './dto/response/response.dto';
+import { DataFormatDto } from './dto/response/data-format.dto';
 import { Profile } from './schemas/profile.schema';
 
 @Controller('profile')
@@ -30,27 +30,36 @@ export class ProfilesController {
 
   @ApiTags('User Profile')
   @ApiOperation({ summary: 'Create profile' })
-  @ApiCreatedResponse({ description: 'Profile has been created' })
+  @ApiCreatedResponse({
+    description: 'Profile has been updated',
+    type: ResponseDto,
+    isArray: true,
+  })
   @UseGuards(AuthGuard())
   @Post()
   async createBook(
     @Body()
-    profile: CreateProfileDto,
+    profileReq: CreateProfileDto,
     @Req() req,
-  ): Promise<ResponseFormat<DataFormat>> {
+  ): Promise<ResponseDto<DataFormatDto>> {
     try {
-      const profileData = await this.profilesService.create(profile, req.user);
+      const profileData = await this.profilesService.create(
+        profileReq,
+        req.user,
+      );
 
-      const responseData: DataFormat = {
+      const responseData: DataFormatDto = {
         name: profileData.name,
         gender: profileData.gender,
         birthday: profileData.birthday,
+        horoscope: profileData.horoscope,
+        zodiac: profileData.zodiac,
         height: profileData.height,
         weight: profileData.weight,
         interest: profileData.interest,
       };
 
-      return new ResponseFormat<DataFormat>(
+      return new ResponseDto<DataFormatDto>(
         'Profile has been created',
         HttpStatus.CREATED,
         responseData,
@@ -62,30 +71,36 @@ export class ProfilesController {
 
   @ApiTags('User Profile')
   @ApiOperation({ summary: 'Update profile' })
-  @ApiCreatedResponse({ description: 'Profile has been updated' })
+  @ApiOkResponse({
+    description: 'Profile has been updated',
+    type: ResponseDto,
+    isArray: true,
+  })
   @UseGuards(AuthGuard())
   @Put()
   async updateProfile(
     @Body()
     profileReq: UpdateProfileDto,
     @Req() req,
-  ): Promise<ResponseFormat<DataFormat>> {
+  ): Promise<ResponseDto<DataFormatDto>> {
     try {
       const profileData: Profile = await this.profilesService.updateById(
         profileReq,
         req.user,
       );
 
-      const responseData: DataFormat = {
+      const responseData: DataFormatDto = {
         name: profileData.name,
         gender: profileData.gender,
         birthday: profileData.birthday,
+        horoscope: profileData.horoscope,
+        zodiac: profileData.zodiac,
         height: profileData.height,
         weight: profileData.weight,
         interest: profileData.interest,
       };
 
-      return new ResponseFormat<DataFormat>(
+      return new ResponseDto<DataFormatDto>(
         'Profile has been updated',
         HttpStatus.OK,
         responseData,
@@ -97,25 +112,31 @@ export class ProfilesController {
 
   @ApiTags('User Profile')
   @ApiOperation({ summary: 'Get profile' })
-  @ApiOkResponse({ description: 'Success get profile data' })
+  @ApiOkResponse({
+    description: 'Success get profile data',
+    type: ResponseDto,
+    isArray: true,
+  })
   @UseGuards(AuthGuard())
   @Get()
-  async getProfile(@Req() req): Promise<ResponseFormat<DataFormat>> {
+  async getProfile(@Req() req): Promise<ResponseDto<DataFormatDto>> {
     try {
       const profileData: Profile = await this.profilesService.findById(
         req.user,
       );
 
-      const responseData: DataFormat = {
+      const responseData: DataFormatDto = {
         name: profileData.name,
         gender: profileData.gender,
         birthday: profileData.birthday,
+        horoscope: profileData.horoscope,
+        zodiac: profileData.zodiac,
         height: profileData.height,
         weight: profileData.weight,
         interest: profileData.interest,
       };
 
-      return new ResponseFormat<DataFormat>(
+      return new ResponseDto<DataFormatDto>(
         'Success get profile data',
         HttpStatus.OK,
         responseData,

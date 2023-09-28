@@ -1,17 +1,18 @@
 import {
   IsArray,
+  IsDateString,
   IsEmpty,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
-import { User } from '../../auth/schemas/user.schema';
-import { Gender } from '../schemas/profile.schema';
+import { User } from '../../../auth/schemas/user.schema';
+import { Gender } from '../../schemas/profile.schema';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 
-export class UpdateProfileDto {
+export class CreateProfileDto {
   @ApiProperty({ type: String })
   @IsOptional()
   @IsString()
@@ -25,7 +26,10 @@ export class UpdateProfileDto {
 
   @ApiProperty({ type: String })
   @IsOptional()
-  @IsString()
+  @IsDateString(
+    { strict: true },
+    { message: 'Birthday must be a date format in yyyy-mm-dd' },
+  )
   readonly birthday: string;
 
   @ApiProperty({ type: Number })
