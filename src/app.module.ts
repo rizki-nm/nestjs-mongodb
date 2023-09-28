@@ -10,7 +10,7 @@ import { ProfilesModule } from './profiles/profiles.module';
       envFilePath: ['.env'],
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.DB_URI),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     ProfilesModule,
   ],
