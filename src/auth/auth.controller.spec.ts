@@ -61,7 +61,6 @@ describe('AuthController', () => {
 
       const result = await authController.login(loginDto);
       expect(authService.login).toHaveBeenCalled();
-
       expect(result).toEqual(jwtToken);
     });
   });

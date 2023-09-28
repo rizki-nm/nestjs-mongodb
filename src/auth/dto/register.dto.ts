@@ -12,7 +12,7 @@ export class RegisterDto {
   @IsEmail({}, { message: 'Please enter correct email' })
   readonly email: string;
 
-  @ApiProperty({ type: 'string' })
+  @ApiProperty({ type: String })
   @IsNotEmpty()
   @IsString()
   @MinLength(6)
