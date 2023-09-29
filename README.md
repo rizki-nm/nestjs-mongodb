@@ -48,7 +48,7 @@ Register new user.
 
 ```json
 {
-  "token": "value1"
+  "token": "string"
 }
 ```
 </details>
@@ -98,7 +98,7 @@ Get user profile.
 - **Method:** `GET`
 - **URL:** `/auth/profile`
 - **Headers:**
-    - `Authorization: Bearer token`
+    - `Authorization: Bearer {token}`
 
 #### Response
 
@@ -139,7 +139,7 @@ Create user profile.
 - **Method:** `POST`
 - **URL:** `/auth/profile`
 - **Headers:**
-    - `Authorization: Bearer token`
+    - `Authorization: Bearer {token}`
 - **Body:**
 ```json
 {
@@ -190,7 +190,7 @@ Update user profile.
 - **Method:** `PUT`
 - **URL:** `/auth/profile`
 - **Headers:**
-    - `Authorization: Bearer token`
+    - `Authorization: Bearer {token}`
 - **Body:**
 ```json
 {
